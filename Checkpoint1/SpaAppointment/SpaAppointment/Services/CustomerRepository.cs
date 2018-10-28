@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SpaAppointment.Services
 {
-    public class Repository
+    public class CustomerRepository
     {
     }
 }

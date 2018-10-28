@@ -7,8 +7,7 @@ namespace SpaAppointment.Models
 {
     public class ServiceProvider
     {
-        public string name { get; set; }
-        public int id { get; set; }
-        public Customer thisServiceProvidersCustomer { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
