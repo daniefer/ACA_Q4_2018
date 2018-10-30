@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpaAppointment.Models;
 using SpaAppointment.Services;
 
 namespace SpaAppointment.Controllers
@@ -31,12 +32,12 @@ namespace SpaAppointment.Controllers
         // POST: Appointment/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Appointment appointments)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                AppointmentRepository.Add(appointments);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -71,7 +72,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(AppointmentRepository.GetAppointment(id));
         }
 
         // POST: Appointment/Delete/5
@@ -82,7 +83,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                AppointmentRepository.DeleteAppointment(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

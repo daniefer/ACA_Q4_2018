@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpaAppointment.Services
@@ -11,6 +12,8 @@ namespace SpaAppointment.Services
         //method to check availibility that loops thru list of app an checks time
         //try to pseudo code THIS - LOOP THRU APP LIST
         //ApptRepo.isApptAvail(appTime, serviceProvider)
+
+        private static int AppointmentKeyCounter = 3;
 
         private static List<Appointment> _appointments = new List<Appointment>()
         {
@@ -24,5 +27,22 @@ namespace SpaAppointment.Services
         };
 
         public static IReadOnlyList<Appointment> Appointments => _appointments;
+
+        public static void Add(Appointment appointments)
+        {
+            appointments.Id = Interlocked.Increment(ref AppointmentKeyCounter);
+            _appointments.Add(appointments);
+        }
+
+        public static Appointment GetAppointment(int id)
+        {
+            return _appointments.Find(x => x.Id == id);
+        }
+
+        public static void DeleteAppointment(int id)
+        {
+            var index = _appointments.FindIndex(x => x.Id == id);
+            _appointments.RemoveAt(index);
+        }
     }
 }
