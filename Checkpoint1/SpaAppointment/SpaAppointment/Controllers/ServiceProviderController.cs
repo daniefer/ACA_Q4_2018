@@ -20,7 +20,7 @@ namespace SpaAppointment.Controllers
         // GET: ServiceProvider/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(ServiceProviderRepository.GetProvider(id));
         }
 
         // GET: ServiceProvider/Create

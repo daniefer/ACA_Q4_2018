@@ -44,5 +44,8 @@ namespace SpaAppointment.Services
             var index = _appointments.FindIndex(x => x.Id == id);
             _appointments.RemoveAt(index);
         }
+
+        //public static void Update
+        //need to think about how I'd write this method
     }
 }

@@ -20,7 +20,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(AppointmentRepository.GetAppointment(id));
         }
 
         // GET: Appointment/Create
@@ -49,13 +49,13 @@ namespace SpaAppointment.Controllers
         // GET: Appointment/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(AppointmentRepository.GetAppointment(id));
         }
 
         // POST: Appointment/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Appointment appointment)
         {
             try
             {

@@ -20,7 +20,7 @@ namespace SpaAppointment.Controllers
         // GET: Customer/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(CustomerRepository.GetCustomer(id));
         }
 
         // GET: Customer/Create
@@ -60,6 +60,10 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add update logic here
+
+                //
+                //get the edit working
+                //
 
                 return RedirectToAction(nameof(Index));
             }
