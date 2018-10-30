@@ -4,40 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SpaAppointment.Models;
 using SpaAppointment.Services;
 
 namespace SpaAppointment.Controllers
 {
-    public class CustomerController : Controller
+    public class AppointmentController : Controller
     {
-        // GET: Customer
+        // GET: Appointment
         public ActionResult Index()
         {
-            return View(CustomerRepository.Customers);
+            return View(AppointmentRepository.Appointments);
         }
 
-        // GET: Customer/Details/5
+        // GET: Appointment/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Customer/Create
+        // GET: Appointment/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: Appointment/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customers)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                CustomerRepository.Add(customers);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -46,13 +45,13 @@ namespace SpaAppointment.Controllers
             }
         }
 
-        // GET: Customer/Edit/5
+        // GET: Appointment/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Customer/Edit/5
+        // POST: Appointment/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -69,21 +68,21 @@ namespace SpaAppointment.Controllers
             }
         }
 
-        // GET: Customer/Delete/5
+        // GET: Appointment/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(CustomerRepository.GetCustomer(id));
+            return View();
         }
 
-        // POST: Customer/Delete/5
+        // POST: Appointment/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Customer collection)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                CustomerRepository.DeleteCustomer(id);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -8,8 +8,9 @@ namespace SpaAppointment.Models
 {
     public class Appointment
     {
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy h:mm tt")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy h:mm tt}")]
         public DateTime AppTime { get; set; }
+
         public int Id { get; set; }
 
         //incase i want to reference the entire class later on

@@ -9,35 +9,35 @@ using SpaAppointment.Services;
 
 namespace SpaAppointment.Controllers
 {
-    public class CustomerController : Controller
+    public class ServiceProviderController : Controller
     {
-        // GET: Customer
+        // GET: ServiceProvider
         public ActionResult Index()
         {
-            return View(CustomerRepository.Customers);
+            return View(ServiceProviderRepository.Providers);
         }
 
-        // GET: Customer/Details/5
+        // GET: ServiceProvider/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Customer/Create
+        // GET: ServiceProvider/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: ServiceProvider/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customers)
+        public ActionResult Create(ServiceProvider providers)
         {
             try
             {
                 // TODO: Add insert logic here
-                CustomerRepository.Add(customers);
+                ServiceProviderRepository.Add(providers);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -46,13 +46,13 @@ namespace SpaAppointment.Controllers
             }
         }
 
-        // GET: Customer/Edit/5
+        // GET: ServiceProvider/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Customer/Edit/5
+        // POST: ServiceProvider/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -69,21 +69,21 @@ namespace SpaAppointment.Controllers
             }
         }
 
-        // GET: Customer/Delete/5
+        // GET: ServiceProvider/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(CustomerRepository.GetCustomer(id));
+            return View(ServiceProviderRepository.GetProvider(id));
         }
 
-        // POST: Customer/Delete/5
+        // POST: ServiceProvider/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Customer collection)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                CustomerRepository.DeleteCustomer(id);
+                ServiceProviderRepository.DeleteProvider(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
