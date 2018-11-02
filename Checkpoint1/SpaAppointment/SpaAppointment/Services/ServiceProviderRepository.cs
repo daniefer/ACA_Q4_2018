@@ -28,6 +28,14 @@ namespace SpaAppointment.Services
             _providers.Add(providers);
         }
 
+        public static void Update(int id, ServiceProvider provider)
+        {
+            var index = _providers.FindIndex(x => x.Id == id);
+            _providers.RemoveAt(index);
+            provider.Id = id;
+            _providers.Insert(index, provider);
+        }
+
         //to delete from the list
         public static void DeleteProvider(int id)
         {

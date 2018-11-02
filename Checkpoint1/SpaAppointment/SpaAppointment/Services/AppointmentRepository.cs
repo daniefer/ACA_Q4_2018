@@ -1,4 +1,5 @@
-﻿using SpaAppointment.Models;
+﻿using SpaAppointment.Controllers;
+using SpaAppointment.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,13 @@ namespace SpaAppointment.Services
 {
     public class AppointmentRepository
     {
-        //method to check availibility that loops thru list of app an checks time
-        //try to pseudo code THIS - LOOP THRU APP LIST
-        //ApptRepo.isApptAvail(appTime, serviceProvider)
 
         private static int AppointmentKeyCounter = 3;
 
         private static List<Appointment> _appointments = new List<Appointment>()
         {
             //Just to stub in data for now
-            new Appointment {AppTime = DateTime.Now, Id =1, Description = "dis mah first appoint ment at spa",
+            new Appointment {AppTime = DateTime.Now, Id =1, Description = "This is the spa's first appointment",
                 CustomerId = 1, ProviderId = 1 },
             new Appointment {AppTime = DateTime.Now, Id =2, Description = "This is my second appointment at the spa",
                 CustomerId = 2, ProviderId = 2 },
@@ -27,6 +25,32 @@ namespace SpaAppointment.Services
         };
 
         public static IReadOnlyList<Appointment> Appointments => _appointments;
+
+        //but u need to pass in the service provider as well somehow....
+        public static void isAppointmentAvailable(DateTime AppTime)
+        {
+            //Try and do the same thing but afterwords byt just accessing the last itme added to the list?
+            var last = Appointments[Appointments.Count - 1];
+
+            //dont forget type AND identifier for foreach loop LOL
+            foreach (Appointment x in _appointments )
+            {
+                //Was attempting to target the user input from the view
+               // DateTime DateRequestForCustAppt = AppointmentController.appointments
+                if (x.AppTime.Equals(last.AppTime))
+                {
+                   DeleteAppointment(last.Id );
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+                //method to check availibility that loops thru list of app an checks time
+                //ApptRepo.isApptAvail(appTime, serviceProvider)
+        }
+
 
         public static void Add(Appointment appointments)
         {

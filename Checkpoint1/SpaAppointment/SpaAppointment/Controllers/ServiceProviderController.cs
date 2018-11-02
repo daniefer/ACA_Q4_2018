@@ -49,18 +49,18 @@ namespace SpaAppointment.Controllers
         // GET: ServiceProvider/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(ServiceProviderRepository.GetProvider(id) );
         }
 
         // POST: ServiceProvider/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ServiceProvider provider)
         {
             try
             {
                 // TODO: Add update logic here
-
+                ServiceProviderRepository.Update(id, provider);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -38,6 +38,7 @@ namespace SpaAppointment.Controllers
             {
                 // TODO: Add insert logic here
                 AppointmentRepository.Add(appointments);
+                AppointmentRepository.isAppointmentAvailable(appointments.AppTime);
                 return RedirectToAction(nameof(Index));
             }
             catch

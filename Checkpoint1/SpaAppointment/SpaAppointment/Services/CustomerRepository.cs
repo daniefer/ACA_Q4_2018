@@ -31,6 +31,14 @@ namespace SpaAppointment.Services
             _customers.Add(customers);
         }
 
+        public static void Update(int id, Customer customers)
+        {
+            var index = _customers.FindIndex(x => x.Id == id);
+            _customers.RemoveAt(index);
+            customers.Id = id;
+            _customers.Insert(index, customers);
+        }
+
         //to delete from the list
         public static void DeleteCustomer(int id)
         {

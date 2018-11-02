@@ -49,22 +49,18 @@ namespace SpaAppointment.Controllers
         // GET: Customer/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(CustomerRepository.GetCustomer(id) );
         }
 
         // POST: Customer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Customer customers)
         {
             try
             {
                 // TODO: Add update logic here
-
-                //
-                //get the edit working
-                //
-
+                CustomerRepository.Update(id, customers);
                 return RedirectToAction(nameof(Index));
             }
             catch
