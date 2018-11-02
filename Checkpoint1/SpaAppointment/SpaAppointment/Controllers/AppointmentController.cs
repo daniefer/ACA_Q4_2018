@@ -61,7 +61,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                AppointmentRepository.Update(id, appointment);
                 return RedirectToAction(nameof(Index));
             }
             catch

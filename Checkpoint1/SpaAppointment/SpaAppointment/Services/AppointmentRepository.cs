@@ -35,12 +35,16 @@ namespace SpaAppointment.Services
             //dont forget type AND identifier for foreach loop LOL
             foreach (Appointment x in _appointments )
             {
+                string date1 = x.AppTime.ToString("{MM/dd/yyyy h:mm tt}");
+                string date2 = last.AppTime.ToString("{MM/dd/yyyy h:mm tt}");
+
                 //Was attempting to target the user input from the view
-               // DateTime DateRequestForCustAppt = AppointmentController.appointments
-                if (x.AppTime.Equals(last.AppTime))
+                // DateTime DateRequestForCustAppt = AppointmentController.appointments
+                if (date1.Equals(date2))
                 {
                    DeleteAppointment(last.Id );
                     return;
+                    //create a return to an error page letting you know why it wasn't created?
                 }
                 else
                 {
@@ -69,7 +73,12 @@ namespace SpaAppointment.Services
             _appointments.RemoveAt(index);
         }
 
-        //public static void Update
-        //need to think about how I'd write this method
+        public static void Update(int id, Appointment appointment)
+        {
+            var index = _appointments.FindIndex(x => x.Id == id);
+            _appointments.RemoveAt(index);
+            appointment.Id = id;
+            _appointments.Insert(index, appointment);
+        }
     }
 }
