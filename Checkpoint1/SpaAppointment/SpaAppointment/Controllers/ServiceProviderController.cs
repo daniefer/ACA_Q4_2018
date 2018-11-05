@@ -20,6 +20,12 @@ namespace SpaAppointment.Controllers
         // GET: ServiceProvider/Details/5
         public ActionResult Details(int id)
         {
+            //Somehow my method ServiceProviderRepository.GetAppointmentsForProviderByDay is supposed 
+            //to get implemented - dunno how. It will not let me.
+            //like absolutely no idea
+            //what do i do? Ive tried so many things creating different views etc 
+            //and right now Its due and Im over it
+
             return View(ServiceProviderRepository.GetProvider(id));
         }
 

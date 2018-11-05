@@ -43,8 +43,19 @@ namespace SpaAppointment.Services
             _providers.RemoveAt(index);
         }
 
+
+        //List method to return service providers for one certain provider by day
+        public static List<Appointment> GetAppointmentsForProviderByDay(int providerId)
+        {
+            return AppointmentRepository.Appointments
+                .Where(x => x.ProviderId == providerId)
+                .OrderBy(x => x.AppTime)
+                .ToList();
+        }
+
         public static ServiceProvider GetProvider(int id)
         {
+            GetAppointmentsForProviderByDay(id);
             return _providers.Find(x => x.Id == id);
         }
     }
