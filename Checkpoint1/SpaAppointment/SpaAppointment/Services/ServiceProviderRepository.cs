@@ -55,7 +55,6 @@ namespace SpaAppointment.Services
 
         public static ServiceProvider GetProvider(int id)
         {
-            GetAppointmentsForProviderByDay(id);
             return _providers.Find(x => x.Id == id);
         }
     }

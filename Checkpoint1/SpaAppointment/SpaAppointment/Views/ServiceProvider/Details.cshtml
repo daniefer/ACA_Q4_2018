@@ -1,8 +1,10 @@
 ﻿@model SpaAppointment.Models.ServiceProvider
+@using SpaAppointment.Services;
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var appointments = ServiceProviderRepository.GetAppointmentsForProviderByDay(Model.Id);
 }
 
 <h2>Details</h2>
@@ -25,6 +27,23 @@
         </dd>
     </dl>
 </div>
+
+<table>
+    @foreach (var item in appointments)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => CustomerRepository.GetCustomer(item.CustomerId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProviderId)
+            </td>
+        </tr>
+    }
+</table>
 
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
