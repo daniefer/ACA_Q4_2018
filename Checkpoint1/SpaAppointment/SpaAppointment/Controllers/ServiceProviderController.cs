@@ -26,6 +26,7 @@ namespace SpaAppointment.Controllers
             //what do i do? Ive tried so many things creating different views etc 
             //and right now Its due and Im over it
 
+            ServiceProviderRepository.GetAppointmentsForProviderByDay(id);
             return View(ServiceProviderRepository.GetProvider(id));
         }
 
