@@ -11,6 +11,13 @@ namespace SpaAppointment.Controllers
 {
     public class AppointmentController : Controller
     {
+        AppointmentRepository repo;
+
+        public AppointmentController(AppointmentRepository _repo)
+        {
+            repo = _repo;
+        }
+
         // GET: Appointment
         public ActionResult Index()
         {
@@ -36,9 +43,8 @@ namespace SpaAppointment.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 AppointmentRepository.Add(appointments);
-                AppointmentRepository.isAppointmentAvailable(appointments.AppTime);
+                repo.isAppointmentAvailable(appointments.AppTime);
                 return RedirectToAction(nameof(Index));
             }
             catch

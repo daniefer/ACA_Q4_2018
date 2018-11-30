@@ -27,7 +27,8 @@ namespace SpaAppointment.Services
         public static IReadOnlyList<Appointment> Appointments => _appointments;
 
         //but u need to pass in the service provider as well somehow....
-        public static void isAppointmentAvailable(DateTime AppTime)
+        public void isAppointmentAvailable(DateTime AppTime)
+            //make not static
         {
             //Try and do the same thing but afterwords byt just accessing the last itme added to the list?
             var last = Appointments[Appointments.Count - 1];
