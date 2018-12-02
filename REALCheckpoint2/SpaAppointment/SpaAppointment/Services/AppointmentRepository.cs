@@ -50,7 +50,7 @@ namespace SpaAppointment.Services
 
         public Appointment GetAppointment(int id)
         {
-            return _spaContext.Appointments.Find(SelectAppointmentsById(int));
+            return _spaContext.Appointments.Find(SelectAppointmentById(int));
         }
 
         public void DeleteAppointment(int id)
@@ -65,6 +65,12 @@ namespace SpaAppointment.Services
             _appointments.RemoveAt(index);
             appointment.Id = id;
             _appointments.Insert(index, appointment);
+        }
+
+        //Selector Functions
+        private static Func<Appointment, bool> SelectAppointmentById(int id)
+        {
+            return Appointment => Appointment.Id == id;
         }
     }
 }
