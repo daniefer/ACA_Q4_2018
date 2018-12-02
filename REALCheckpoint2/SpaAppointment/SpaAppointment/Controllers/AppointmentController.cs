@@ -46,17 +46,6 @@ namespace SpaAppointment.Controllers
                 ModelState.AddModelError("AppTime", "Appointment is not available.");
                 return View();
             }
-
-            //try
-            //{
-            //    repo.Add(appointments);
-            //    repo.isAppointmentAvailable(appointments.AppTime);
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
 
         // GET: Appointment/Edit/5

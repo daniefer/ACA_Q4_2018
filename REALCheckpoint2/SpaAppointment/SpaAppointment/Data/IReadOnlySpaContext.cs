@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaAppointment.Data
 {
-    interface IReadOnlySpaContext
+    public interface IReadOnlySpaContext
     {
         IQueryable<Appointment> Appointments { get; }
     }

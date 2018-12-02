@@ -13,16 +13,14 @@ namespace SpaAppointment.Services
     {
 
         private int AppointmentKeyCounter = 3;
-
         private readonly SpaContext _spaContext;
-
-        private readonly SpaContext _readOnlySpaContext;
-
+        private readonly IReadOnlySpaContext _readOnlySpaContext;
         public IQueryable<Appointment> Appointments => _spaContext.Appointments;
 
-        public AppointmentRepository()
+        public AppointmentRepository(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
         {
-
+            _spaContext = spaContext;
+            _readOnlySpaContext = readOnlySpaContext;
         }
 
         public bool isAppointmentAvailable(DateTime ProposedTime)
