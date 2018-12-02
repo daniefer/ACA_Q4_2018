@@ -50,7 +50,7 @@ namespace SpaAppointment.Services
 
         public Appointment GetAppointment(int id)
         {
-            return _appointments.Find(x => x.Id == id);
+            return _spaContext.Appointments.Find(SelectAppointmentsById(int));
         }
 
         public void DeleteAppointment(int id)
