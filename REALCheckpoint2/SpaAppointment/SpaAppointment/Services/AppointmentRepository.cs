@@ -1,4 +1,5 @@
 ﻿using SpaAppointment.Controllers;
+using SpaAppointment.Data;
 using SpaAppointment.Models;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,7 @@ namespace SpaAppointment.Services
 
         private int AppointmentKeyCounter = 3;
 
-        private List<Appointment> _appointments = new List<Appointment>()
-        {
-            //Just to stub in data for now
-            new Appointment {AppTime = DateTime.Now, Id=1, Description = "This is the spa's first appointment",
-                CustomerId = 1, ProviderId = 1 },
-            new Appointment {AppTime = DateTime.Now, Id =2, Description = "This is my second appointment at the spa",
-                CustomerId = 2, ProviderId = 2 },
-            new Appointment {AppTime = DateTime.Now, Id =3, Description = "Appontment three, Baby!!",
-                CustomerId = 3, ProviderId = 3 }
-        };
-
-        public IReadOnlyList<Appointment> Appointments => _appointments;
+        private readonly SpaContext _spaContext;
 
         public void isAppointmentAvailable(DateTime AppTime)
         {
@@ -52,10 +42,10 @@ namespace SpaAppointment.Services
         }
 
 
-        public void Add(Appointment appointments)
+        public void Add(Appointment appointment)
         {
-            appointments.Id = Interlocked.Increment(ref AppointmentKeyCounter);
-            _appointments.Add(appointments);
+            appointment.Id = Interlocked.Increment(ref AppointmentKeyCounter);
+            _spaContext.Appointments.Add(appointment);
         }
 
         public Appointment GetAppointment(int id)
