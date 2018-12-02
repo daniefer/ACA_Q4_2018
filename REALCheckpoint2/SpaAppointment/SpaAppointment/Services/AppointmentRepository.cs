@@ -16,28 +16,25 @@ namespace SpaAppointment.Services
 
         private readonly SpaContext _spaContext;
 
-        public void isAppointmentAvailable(DateTime AppTime)
+        private readonly SpaContext _readOnlySpaContext;
+
+        public IQueryable<Appointment> Appointments => _spaContext.Appointments;
+
+        public AppointmentRepository()
         {
-            //Try and do the same thing but afterwords by just accessing the last item added to the list?
-            var last = Appointments[Appointments.Count - 1];
 
-            //dont forget type AND identifier for foreach loop LOL
-            foreach (Appointment x in _appointments )
+        }
+
+        public bool isAppointmentAvailable(DateTime ProposedTime)
+        {
+            foreach (Appointment x in _spaContext.Appointments )
             {
-                string date1 = x.AppTime.ToString("{MM/dd/yyyy h:mm tt}");
-                string date2 = last.AppTime.ToString("{MM/dd/yyyy h:mm tt}");
-
-                if (date1.Equals(date2))
+                if (x.AppTime.ToString("mm/dd/") == ProposedTime.ToString(""))
                 {
-                   DeleteAppointment(last.Id );
-                    return;
-                    //create a return to an error page letting you know why it wasn't created?
-                }
-                else
-                {
-                    return;
+                    return false;
                 }
             }
+            return true;
                 //method to check availibility that loops thru list of app an checks time
         }
 
@@ -46,25 +43,25 @@ namespace SpaAppointment.Services
         {
             appointment.Id = Interlocked.Increment(ref AppointmentKeyCounter);
             _spaContext.Appointments.Add(appointment);
+            _spaContext.SaveChanges();
         }
 
         public Appointment GetAppointment(int id)
         {
-            return _spaContext.Appointments.Find(SelectAppointmentById(int));
+            return _spaContext.Appointments.Find(SelectAppointmentById(id));
         }
 
         public void DeleteAppointment(int id)
         {
-            var index = _appointments.FindIndex(x => x.Id == id);
-            _appointments.RemoveAt(index);
+            var index = _spaContext.Appointments.Find(SelectAppointmentById(id));
+            _spaContext.Appointments.Remove(index);
         }
 
         public void Update(int id, Appointment appointment)
         {
-            var index = _appointments.FindIndex(x => x.Id == id);
-            _appointments.RemoveAt(index);
             appointment.Id = id;
-            _appointments.Insert(index, appointment);
+            _spaContext.Appointments.Update(appointment);
+            _spaContext.SaveChanges();
         }
 
         //Selector Functions
