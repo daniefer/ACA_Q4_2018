@@ -12,27 +12,23 @@ namespace SpaAppointment.Controllers
 {
     public class AppointmentController : Controller
     {
-        private readonly SpaContext _spaContext;
-        private readonly IReadOnlySpaContext _readOnlySpaContext;
+        private readonly AppointmentRepository _repo;
         
-        public AppointmentController(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
+        public AppointmentController(AppointmentRepository repo)
         {
-            spaContext = _spaContext;
-            readOnlySpaContext = _readOnlySpaContext;
+            _repo = repo;
         }
-
-        AppointmentRepository repo = new AppointmentRepository();
 
         // GET: Appointment
         public ActionResult Index()
         {
-            return View(repo.Appointments);
+            return View(_repo.Appointments);
         }
 
         // GET: Appointment/Details/5
         public ActionResult Details(int id)
         {
-            return View(repo.GetAppointment(id));
+            return View(_repo.GetAppointment(id));
         }
 
         // GET: Appointment/Create
