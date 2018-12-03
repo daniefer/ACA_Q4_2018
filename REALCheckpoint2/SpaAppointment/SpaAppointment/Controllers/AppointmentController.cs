@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpaAppointment.Data;
 using SpaAppointment.Models;
 using SpaAppointment.Services;
 
@@ -11,6 +12,15 @@ namespace SpaAppointment.Controllers
 {
     public class AppointmentController : Controller
     {
+        private readonly SpaContext _spaContext;
+        private readonly IReadOnlySpaContext _readOnlySpaContext;
+        
+        public AppointmentController(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
+        {
+            spaContext = _spaContext;
+            readOnlySpaContext = _readOnlySpaContext;
+        }
+
         AppointmentRepository repo = new AppointmentRepository();
 
         // GET: Appointment
