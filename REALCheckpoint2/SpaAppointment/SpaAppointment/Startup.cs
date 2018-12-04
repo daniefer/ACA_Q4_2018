@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpaAppointment.Services;
 using SpaAppointment.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaAppointment
 {
@@ -27,6 +28,9 @@ namespace SpaAppointment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<AppointmentRepository, AppointmentRepository>();
+            services.AddScoped<ServiceProviderRepository, ServiceProviderRepository>();
+            services.AddScoped<CustomerRepository, CustomerRepository>();
+            services.AddScoped<IReadOnlySpaContext, SpaContext>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -34,7 +38,8 @@ namespace SpaAppointment
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<SpaContext>();
+            services.AddDbContext<SpaContext>(config => config
+                .UseSqlServer(Configuration.GetConnectionString("SpaAppointment")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -62,6 +67,16 @@ namespace SpaAppointment
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            EnsureDatabaseUpdated(app);
+        }
+        private void EnsureDatabaseUpdated(IApplicationBuilder app)
+        {
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var serviceScope = scopeFactory.CreateScope())
+            using (var context = serviceScope.ServiceProvider.GetService<SpaContext>())
+            {
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

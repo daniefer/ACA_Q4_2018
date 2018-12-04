@@ -1,4 +1,5 @@
-﻿using SpaAppointment.Models;
+﻿using SpaAppointment.Data;
+using SpaAppointment.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +12,43 @@ namespace SpaAppointment.Services
     {
         private int ProviderKeyCounter = 3;
 
-        private List<ServiceProvider> _providers = new List<ServiceProvider>
+        private readonly SpaContext _spaContext;
+        private readonly IReadOnlySpaContext _readOnlySpaContext;
+        public IQueryable<ServiceProvider> ServiceProviders => _spaContext.ServiceProviders;
+
+        public ServiceProviderRepository(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
         {
-            //just to have data for now
+            _spaContext = spaContext;
+            _readOnlySpaContext = readOnlySpaContext;
+        }
 
-            new ServiceProvider {Name = "Joey Helperstien", Id=1},
-            new ServiceProvider {Name = "Wendy Goosebumps", Id=2},
-            new ServiceProvider {Name = "Cher Bear", Id=3},
-        };
-
-        public IReadOnlyList<ServiceProvider> Providers => _providers;
-
-        public void Add(ServiceProvider providers)
+        public void Add(ServiceProvider provider)
         {
-            providers.Id = Interlocked.Increment(ref ProviderKeyCounter);
-            _providers.Add(providers);
+            provider.Id = Interlocked.Increment(ref ProviderKeyCounter);
+            _spaContext.ServiceProviders.Add(provider);
+            _spaContext.SaveChanges();
         }
 
         public void Update(int id, ServiceProvider provider)
         {
-            var index = _providers.FindIndex(x => x.Id == id);
-            _providers.RemoveAt(index);
             provider.Id = id;
-            _providers.Insert(index, provider);
+            _spaContext.ServiceProviders.Update(provider);
+            _spaContext.SaveChanges();
         }
 
         //to delete from the list
         public void DeleteProvider(int id)
         {
-            var index = _providers.FindIndex(x => x.Id == id);
-            _providers.RemoveAt(index);
+            var index = _spaContext.ServiceProviders.Find(SelectProviderById(id));
+            _spaContext.ServiceProviders.Remove(index);
+            _spaContext.SaveChanges();
         }
 
 
         //List method to return service providers for one certain provider by day
         public List<Appointment> GetAppointmentsForProviderByDay(int providerId)
         {
-            var repo = new AppointmentRepository();
-            return repo.Appointments
+            return _spaContext.Appointments
                 .Where(x => x.ProviderId == providerId)
                 .OrderBy(x => x.AppTime)
                 .ToList();
@@ -56,7 +56,13 @@ namespace SpaAppointment.Services
 
         public ServiceProvider GetProvider(int id)
         {
-            return _providers.Find(x => x.Id == id);
+            return _spaContext.ServiceProviders.Find(SelectProviderById(id));
+        }
+
+        //Selector Functions
+        private static Func<ServiceProvider, bool> SelectProviderById(int id)
+        {
+            return ServiceProviders => ServiceProviders.Id == id;
         }
     }
 }

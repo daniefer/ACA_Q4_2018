@@ -1,4 +1,5 @@
-﻿using SpaAppointment.Models;
+﻿using SpaAppointment.Data;
+using SpaAppointment.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +12,47 @@ namespace SpaAppointment.Services
     {
         //keep track of wat is in my list
         private int CustomerKeyCounter = 3;
+        private readonly SpaContext _spaContext;
+        private readonly IReadOnlySpaContext _readOnlySpaContext;
+        public IQueryable<Customer> Customers => _spaContext.Customers;
 
-        private List<Customer> _customers = new List<Customer>
+        public CustomerRepository(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
         {
-            //just to have data for now
-
-            new Customer {Name = "John Doe", Id = 1},
-            new Customer {Name = "Bill Pricks", Id = 2},
-            new Customer {Name = "Svett CoughOnYah", Id = 3}
-        };
-
-        //this allows me to pass my list into my controller methods so they can be seen by the view
-        public IReadOnlyList<Customer> Customers => _customers;
-
-        //method allows me to add customers to my list
-        public void Add(Customer customers)
-        {
-            customers.Id = Interlocked.Increment(ref CustomerKeyCounter);
-            _customers.Add(customers);
+            _spaContext = spaContext;
+            _readOnlySpaContext = readOnlySpaContext;
         }
 
-        public void Update(int id, Customer customers)
+        //method allows me to add customers to my list
+        public void Add(Customer customer)
         {
-            var index = _customers.FindIndex(x => x.Id == id);
-            _customers.RemoveAt(index);
-            customers.Id = id;
-            _customers.Insert(index, customers);
+            customer.Id = Interlocked.Increment(ref CustomerKeyCounter);
+            _spaContext.Customers.Add(customer);
+            _spaContext.SaveChanges();
+        }
+
+        public void Update(int id, Customer customer)
+        {
+            customer.Id = id;
+            _spaContext.Customers.Update(customer);
+            _spaContext.SaveChanges();
         }
 
         //to delete from the list
         public void DeleteCustomer(int id)
         {
-            var index = _customers.FindIndex(x => x.Id == id);
-            _customers.RemoveAt(index);
+            var index = _spaContext.Customers.Find(SelectCustomerById(id));
+            _spaContext.Customers.Remove(index);
         }
 
         public Customer GetCustomer(int id)
         {
-            return _customers.Find(x => x.Id == id);
+            return _spaContext.Customers.Find(SelectCustomerById(id));
+        }
+
+        //Selector Functions
+        private static Func<Customer, bool> SelectCustomerById(int id)
+        {
+            return Customer => Customer.Id == id;
         }
     }
 }

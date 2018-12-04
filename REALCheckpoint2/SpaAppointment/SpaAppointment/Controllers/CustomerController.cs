@@ -11,17 +11,21 @@ namespace SpaAppointment.Controllers
 {
     public class CustomerController : Controller
     {
-        CustomerRepository repo = new CustomerRepository();
+        private readonly CustomerRepository _repo;
+        public CustomerController(CustomerRepository repo)
+        {
+            _repo = repo;
+        }
         // GET: Customer
         public ActionResult Index()
         {
-            return View(repo.Customers);
+            return View(_repo.Customers);
         }
 
         // GET: Customer/Details/5
         public ActionResult Details(int id)
         {
-            return View(repo.GetCustomer(id));
+            return View(_repo.GetCustomer(id));
         }
 
         // GET: Customer/Create
@@ -38,7 +42,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add insert logic here
-                repo.Add(customers);
+                _repo.Add(customers);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -50,7 +54,7 @@ namespace SpaAppointment.Controllers
         // GET: Customer/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(repo.GetCustomer(id) );
+            return View(_repo.GetCustomer(id) );
         }
 
         // POST: Customer/Edit/5
@@ -61,7 +65,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add update logic here
-                repo.Update(id, customers);
+                _repo.Update(id, customers);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -73,7 +77,7 @@ namespace SpaAppointment.Controllers
         // GET: Customer/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(repo.GetCustomer(id));
+            return View(_repo.GetCustomer(id));
         }
 
         // POST: Customer/Delete/5
@@ -84,7 +88,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add delete logic here
-                repo.DeleteCustomer(id);
+                _repo.DeleteCustomer(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

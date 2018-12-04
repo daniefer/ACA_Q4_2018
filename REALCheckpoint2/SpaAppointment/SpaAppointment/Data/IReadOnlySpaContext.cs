@@ -9,5 +9,7 @@ namespace SpaAppointment.Data
     public interface IReadOnlySpaContext
     {
         IQueryable<Appointment> Appointments { get; }
+        IQueryable<Customer> Customers { get; }
+        IQueryable<ServiceProvider> ServiceProviders { get; }
     }
 }

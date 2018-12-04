@@ -53,6 +53,7 @@ namespace SpaAppointment.Services
         {
             var index = _spaContext.Appointments.Find(SelectAppointmentById(id));
             _spaContext.Appointments.Remove(index);
+            _spaContext.SaveChanges();
         }
 
         public void Update(int id, Appointment appointment)

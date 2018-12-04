@@ -42,9 +42,9 @@ namespace SpaAppointment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Appointment appointments)
         {
-            if (repo.isAppointmentAvailable(appointments.AppTime))
+            if (_repo.isAppointmentAvailable(appointments.AppTime))
             {
-                repo.Add(appointments);
+                _repo.Add(appointments);
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -57,7 +57,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(repo.GetAppointment(id));
+            return View(_repo.GetAppointment(id));
         }
 
         // POST: Appointment/Edit/5
@@ -68,7 +68,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add update logic here
-                repo.Update(id, appointment);
+                _repo.Update(id, appointment);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,7 +80,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(repo.GetAppointment(id));
+            return View(_repo.GetAppointment(id));
         }
 
         // POST: Appointment/Delete/5
@@ -91,7 +91,7 @@ namespace SpaAppointment.Controllers
             try
             {
                 // TODO: Add delete logic here
-                repo.DeleteAppointment(id);
+                _repo.DeleteAppointment(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

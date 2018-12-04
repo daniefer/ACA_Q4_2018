@@ -11,11 +11,17 @@ namespace SpaAppointment.Controllers
 {
     public class ServiceProviderController : Controller
     {
-        ServiceProviderRepository repo = new ServiceProviderRepository();
+        private readonly ServiceProviderRepository repo;
+
+        public ServiceProviderController(ServiceProviderRepository _repo)
+        {
+            repo = _repo;
+        }
+
         // GET: ServiceProvider
         public ActionResult Index()
         {
-            return View(repo.Providers);
+            return View(repo.ServiceProviders);
         }
 
         // GET: ServiceProvider/Details/5
