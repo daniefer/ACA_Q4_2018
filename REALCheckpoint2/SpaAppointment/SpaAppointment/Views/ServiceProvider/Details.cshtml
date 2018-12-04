@@ -1,11 +1,13 @@
 ﻿@model SpaAppointment.Models.ServiceProvider
 @using SpaAppointment.Services;
-@using SpaAppointment.Data
+@using SpaAppointment.Data;
+@inject ServiceProviderRepository
+@inject CustomerRepository
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ServiceProviderRepository repo = new ServiceProviderRepository();
+    ServiceProviderRepository repo = new ServiceProviderRepository(spaContext, readOnlySpaContext);
     CustomerRepository custRepo = new CustomerRepository();
     var appointments = repo.GetAppointmentsForProviderByDay(Model.Id);
 }
