@@ -1,15 +1,15 @@
 ﻿@model SpaAppointment.Models.ServiceProvider
 @using SpaAppointment.Services;
 @using SpaAppointment.Data;
-@inject ServiceProviderRepository
-@inject CustomerRepository
+@inject SpaAppointment.Services.ServiceProviderRepository ServRepo
+@inject SpaAppointment.Services.CustomerRepository CustRepo
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ServiceProviderRepository repo = new ServiceProviderRepository(spaContext, readOnlySpaContext);
-    CustomerRepository custRepo = new CustomerRepository();
-    var appointments = repo.GetAppointmentsForProviderByDay(Model.Id);
+    //ServiceProviderRepository repo = new ServiceProviderRepository();
+    //CustomerRepository custRepo = new CustomerRepository();
+    var appointments = ServRepo.GetAppointmentsForProviderByDay(Model.Id);
 }
 
 <h2>Details</h2>
@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.AppTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => custRepo.GetCustomer(item.CustomerId).Name)
+                @Html.DisplayFor(modelItem => CustRepo.GetCustomer(item.CustomerId).Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProviderId)
