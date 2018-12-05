@@ -13,9 +13,9 @@ namespace SpaAppointment.Data
         {
         }
 
-        public DbSet<Appointment> Appointments { get; }
-        public DbSet<Customer> Customers { get; }
-        public DbSet<ServiceProvider> ServiceProviders { get; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ServiceProvider> ServiceProviders { get; set; }
 
         IQueryable<Appointment> IReadOnlySpaContext.Appointments { get => Appointments.AsNoTracking(); }
         IQueryable<Customer> IReadOnlySpaContext.Customers { get => Customers.AsNoTracking(); }

@@ -13,13 +13,11 @@ namespace SpaAppointment.Services
         //keep track of wat is in my list
         private int CustomerKeyCounter = 3;
         private readonly SpaContext _spaContext;
-        private readonly IReadOnlySpaContext _readOnlySpaContext;
-        public IQueryable<Customer> Customers => _spaContext.Customers;
+        public IQueryable<Customer> Customers => _spaContext.Customers.AsQueryable();
 
-        public CustomerRepository(SpaContext spaContext, IReadOnlySpaContext readOnlySpaContext)
+        public CustomerRepository(SpaContext spaContext)
         {
             _spaContext = spaContext;
-            _readOnlySpaContext = readOnlySpaContext;
         }
 
         //method allows me to add customers to my list

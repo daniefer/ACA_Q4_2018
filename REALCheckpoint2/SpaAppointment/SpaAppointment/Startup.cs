@@ -27,6 +27,10 @@ namespace SpaAppointment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<SpaContext>(config => config
+                .UseSqlServer(Configuration.GetConnectionString("SpaAppointment")));
+
             services.AddScoped<AppointmentRepository, AppointmentRepository>();
             services.AddScoped<ServiceProviderRepository, ServiceProviderRepository>();
             services.AddScoped<CustomerRepository, CustomerRepository>();
@@ -37,9 +41,6 @@ namespace SpaAppointment
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDbContext<SpaContext>(config => config
-                .UseSqlServer(Configuration.GetConnectionString("SpaAppointment")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

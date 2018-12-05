@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpaAppointment.Data;
 using SpaAppointment.Models;
 using SpaAppointment.Services;
@@ -22,7 +23,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment
         public ActionResult Index()
         {
-            return View(_repo.Appointments);
+            return View(_repo.Appointments.Include(x => x.ProviderId));
         }
 
         // GET: Appointment/Details/5
