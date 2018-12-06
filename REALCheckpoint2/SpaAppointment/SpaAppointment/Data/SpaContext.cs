@@ -13,6 +13,8 @@ namespace SpaAppointment.Data
         {
         }
 
+        protected override void OnModelCreating
+
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
