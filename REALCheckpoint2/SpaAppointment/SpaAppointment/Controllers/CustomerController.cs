@@ -37,17 +37,17 @@ namespace SpaAppointment.Controllers
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customers)
+        public ActionResult Create(Customer customer)
         {
             try
             {
                 // TODO: Add insert logic here
-                _repo.Add(customers);
+                _repo.Add(customer);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return ErrorView(ex);
             }
         }
 
@@ -95,6 +95,12 @@ namespace SpaAppointment.Controllers
             {
                 return View();
             }
+        }
+
+        private ActionResult ErrorView(Exception ex)
+        {
+            ModelState.AddModelError(string.Empty, "Unknown Error");
+            return View();
         }
     }
 }
