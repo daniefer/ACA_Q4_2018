@@ -13,7 +13,11 @@ namespace SpaAppointment.Data
         {
         }
 
-        protected override void OnModelCreating
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Appointment>().HasKey(x => x.Id).ForSqlServerIsClustered();
+            modelBuilder.Entity<Appointment>().Property(x => x.Id).UseSqlServerIdentityColumn();
+        }
 
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Customer> Customers { get; set; }

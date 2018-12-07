@@ -10,8 +10,6 @@ namespace SpaAppointment.Services
 {
     public class CustomerRepository
     {
-        //keep track of wat is in my list
-        private int CustomerKeyCounter = 3;
         private readonly SpaContext _spaContext;
         public IQueryable<Customer> Customers => _spaContext.Customers.AsQueryable();
 
@@ -23,7 +21,6 @@ namespace SpaAppointment.Services
         //method allows me to add customers to my list
         public void Add(Customer customer)
         {
-            customer.Id = Interlocked.Increment(ref CustomerKeyCounter);
             _spaContext.Customers.Add(customer);
             _spaContext.SaveChanges();
         }
@@ -38,13 +35,13 @@ namespace SpaAppointment.Services
         //to delete from the list
         public void DeleteCustomer(int id)
         {
-            var index = _spaContext.Customers.Find(SelectCustomerById(id));
+            var index = _spaContext.Customers.First(SelectCustomerById(id));
             _spaContext.Customers.Remove(index);
         }
 
         public Customer GetCustomer(int id)
         {
-            return _spaContext.Customers.Find(SelectCustomerById(id));
+            return _spaContext.Customers.First(SelectCustomerById(id));
         }
 
         //Selector Functions

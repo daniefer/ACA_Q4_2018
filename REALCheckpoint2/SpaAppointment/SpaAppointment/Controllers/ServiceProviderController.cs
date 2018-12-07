@@ -40,17 +40,17 @@ namespace SpaAppointment.Controllers
         // POST: ServiceProvider/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ServiceProvider providers)
+        public ActionResult Create([Bind("Name")]ServiceProvider provider)
         {
             try
             {
                 // TODO: Add insert logic here
-                repo.Add(providers);
+                repo.Add(provider);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return ErrorView(ex);
             }
         }
 
@@ -98,6 +98,12 @@ namespace SpaAppointment.Controllers
             {
                 return View();
             }
+        }
+
+        private ActionResult ErrorView(Exception ex)
+        {
+            ModelState.AddModelError(string.Empty, "Unknown Error");
+            return View();
         }
     }
 }

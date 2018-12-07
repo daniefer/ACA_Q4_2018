@@ -37,7 +37,7 @@ namespace SpaAppointment.Controllers
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customer)
+        public ActionResult Create([Bind("Name")]Customer customer)
         {
             try
             {

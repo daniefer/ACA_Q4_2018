@@ -10,8 +10,6 @@ namespace SpaAppointment.Services
 {
     public class ServiceProviderRepository
     {
-        private int ProviderKeyCounter = 3;
-
         private readonly SpaContext _spaContext;
         private readonly IReadOnlySpaContext _readOnlySpaContext;
         public IQueryable<ServiceProvider> ServiceProviders => _spaContext.ServiceProviders;
@@ -24,7 +22,6 @@ namespace SpaAppointment.Services
 
         public void Add(ServiceProvider provider)
         {
-            provider.Id = Interlocked.Increment(ref ProviderKeyCounter);
             _spaContext.ServiceProviders.Add(provider);
             _spaContext.SaveChanges();
         }
@@ -39,7 +36,7 @@ namespace SpaAppointment.Services
         //to delete from the list
         public void DeleteProvider(int id)
         {
-            var index = _spaContext.ServiceProviders.Find(SelectProviderById(id));
+            var index = _spaContext.ServiceProviders.First(SelectProviderById(id));
             _spaContext.ServiceProviders.Remove(index);
             _spaContext.SaveChanges();
         }
@@ -56,7 +53,7 @@ namespace SpaAppointment.Services
 
         public ServiceProvider GetProvider(int id)
         {
-            return _spaContext.ServiceProviders.Find(SelectProviderById(id));
+            return _spaContext.ServiceProviders.First(SelectProviderById(id));
         }
 
         //Selector Functions

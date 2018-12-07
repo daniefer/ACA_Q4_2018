@@ -23,7 +23,7 @@ namespace SpaAppointment.Controllers
         // GET: Appointment
         public ActionResult Index()
         {
-            return View(_repo.Appointments.Include(x => x.ProviderId));
+            return View(_repo.Appointments);
         }
 
         // GET: Appointment/Details/5

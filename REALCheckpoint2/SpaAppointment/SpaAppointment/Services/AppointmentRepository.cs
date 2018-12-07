@@ -11,8 +11,6 @@ namespace SpaAppointment.Services
 {
     public class AppointmentRepository
     {
-
-        private int AppointmentKeyCounter = 3;
         private readonly SpaContext _spaContext;
         private readonly IReadOnlySpaContext _readOnlySpaContext;
         public IQueryable<Appointment> Appointments => _spaContext.Appointments;
@@ -39,19 +37,18 @@ namespace SpaAppointment.Services
 
         public void Add(Appointment appointment)
         {
-            appointment.Id = Interlocked.Increment(ref AppointmentKeyCounter);
             _spaContext.Appointments.Add(appointment);
             _spaContext.SaveChanges();
         }
 
         public Appointment GetAppointment(int id)
         {
-            return _spaContext.Appointments.Find(SelectAppointmentById(id));
+            return _spaContext.Appointments.First(SelectAppointmentById(id));
         }
 
         public void DeleteAppointment(int id)
         {
-            var index = _spaContext.Appointments.Find(SelectAppointmentById(id));
+            var index = _spaContext.Appointments.First(SelectAppointmentById(id));
             _spaContext.Appointments.Remove(index);
             _spaContext.SaveChanges();
         }
@@ -66,7 +63,7 @@ namespace SpaAppointment.Services
         //Selector Functions
         private static Func<Appointment, bool> SelectAppointmentById(int id)
         {
-            return Appointment => Appointment.Id == id;
+            return App => App.Id == id;
         }
     }
 }
