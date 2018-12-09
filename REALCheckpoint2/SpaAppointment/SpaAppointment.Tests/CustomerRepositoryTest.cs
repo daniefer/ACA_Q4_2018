@@ -1,4 +1,6 @@
-﻿using SpaAppointment.Models;
+﻿using Moq;
+using SpaAppointment.Data;
+using SpaAppointment.Models;
 using SpaAppointment.Services;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,12 @@ namespace SpaAppointment.Tests
 {
     public class CustomerRepositoryTest
     {
-        CustomerRepository repo = new CustomerRepository();
         [Fact]
         public void CanCustomerRepositoryGetCustomer()
         {
             //arrange
+            var mockSpaContext = new Mock<SpaContext>();
+            CustomerRepository repo = new CustomerRepository(mockSpaContext.Object);
             var testCustomer = new Customer()
             {
                 Name = "Jay Winn",

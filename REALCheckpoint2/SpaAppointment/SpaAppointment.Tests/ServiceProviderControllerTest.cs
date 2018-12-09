@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SpaAppointment.Controllers;
 using SpaAppointment.Models;
+using SpaAppointment.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +16,8 @@ namespace SpaAppointment.Tests
         public void CanServiceProviderControllerViewDetails()
         {
             //arrange
-            var controller = new ServiceProviderController();
+            var mockServRepo = new Mock<ServiceProviderRepository>();
+            var controller = new ServiceProviderController(mockServRepo.Object);
             var testProvider = new ServiceProvider();
 
             //act

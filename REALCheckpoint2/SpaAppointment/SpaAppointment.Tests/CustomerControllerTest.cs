@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpaAppointment.Controllers;
+using SpaAppointment.Services;
 using SpaAppointment.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Moq;
 
 namespace SpaAppointment.Tests
 {
@@ -14,7 +16,8 @@ namespace SpaAppointment.Tests
         public void CanCustomerControllerReturnIndexView()
         {
             //arrange
-            var controller = new CustomerController();
+            var mockRepo = new Mock<CustomerRepository>();
+            var controller = new CustomerController(mockRepo.Object);
 
             //act
             var result = controller.Index();

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SpaAppointment.Controllers;
 using SpaAppointment.Models;
+using SpaAppointment.Services;
 using System.Collections.Generic;
 using Xunit;
 
@@ -12,7 +14,11 @@ namespace SpaAppointment.Tests
         public void CanAppointmentControllerCreate()
         {
             //arrange
-            var controller = new AppointmentController();
+            var mockServRepo = new Mock<ServiceProviderRepository>();
+            var mockAppRepo = new Mock<AppointmentRepository>();
+            var mockCustRepo = new Mock<CustomerRepository>();
+            var controller = new AppointmentController(mockAppRepo.Object,
+                mockCustRepo.Object, mockServRepo.Object);
             var testApp = new Appointment();
 
             //act

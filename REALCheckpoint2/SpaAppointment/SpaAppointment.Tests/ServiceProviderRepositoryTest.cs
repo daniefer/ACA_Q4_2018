@@ -1,4 +1,6 @@
-﻿using SpaAppointment.Models;
+﻿using Moq;
+using SpaAppointment.Data;
+using SpaAppointment.Models;
 using SpaAppointment.Services;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,14 @@ namespace SpaAppointment.Tests
 {
     public class ServiceProviderRepositoryTest
     {
-        ServiceProviderRepository repo = new ServiceProviderRepository();
         [Fact]
         public void CanServiceProviderRepositoryDeleteProvider()
         {
             //arrange
+            var mockSpaContext = new Mock<SpaContext>();
+            var mockReadOnlySpaContext = new Mock<IReadOnlySpaContext>();
+            ServiceProviderRepository repo = new ServiceProviderRepository(
+                mockSpaContext.Object, mockReadOnlySpaContext.Object);
             var testProvider = new ServiceProvider()
             {
                 Id = 10,
@@ -26,7 +31,7 @@ namespace SpaAppointment.Tests
             repo.DeleteProvider(testProvider.Id);
 
             //assert
-            var p = repo.Providers.FirstOrDefault(x => x.Id == testProvider.Id);
+            var p = repo.ServiceProviders.FirstOrDefault(x => x.Id == testProvider.Id);
             Assert.Null(p);
         }
     }
