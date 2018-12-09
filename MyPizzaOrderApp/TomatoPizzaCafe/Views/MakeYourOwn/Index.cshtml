@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TomatoPizzaCafe.Models.MakeYourOwn>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Topping)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crust)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Topping)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sauce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Crust)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MakeYourOwnId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MakeYourOwnId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MakeYourOwnId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

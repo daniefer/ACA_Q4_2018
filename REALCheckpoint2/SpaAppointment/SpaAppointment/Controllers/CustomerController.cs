@@ -41,7 +41,6 @@ namespace SpaAppointment.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 _repo.Add(customer);
                 return RedirectToAction(nameof(Index));
             }

@@ -102,7 +102,8 @@ namespace SpaAppointment.Controllers
 
         private ActionResult ErrorView(Exception ex)
         {
-            ModelState.AddModelError(string.Empty, "Unknown Error");
+            ModelState.AddModelError(string.Empty, "To be honest... we're not sure what happened here..." +
+                "just like... try again or something? Idk. Press back? Google it?");
             return View();
         }
     }

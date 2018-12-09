@@ -12,11 +12,6 @@ namespace SpaAppointment.Models
         public DateTime AppTime { get; set; }
 
         public int Id { get; set; }
-
-        //incase i want to reference the entire class later on
-        //public Customer appCustomer { get; set; }
-        //public ServiceProvider appServiceProvider { get; set; }
-
         public string Description { get; set; }
         public int CustomerId { get; set; }
         public int ProviderId { get; set; }

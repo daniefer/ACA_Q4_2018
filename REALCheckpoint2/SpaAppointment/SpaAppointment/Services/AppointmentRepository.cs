@@ -21,17 +21,20 @@ namespace SpaAppointment.Services
             _readOnlySpaContext = readOnlySpaContext;
         }
 
-        public bool isAppointmentAvailable(DateTime ProposedTime)
+        public bool isAppointmentAvailable(Appointment ProposedApp)
         {
             foreach (Appointment x in _spaContext.Appointments )
             {
-                if (x.AppTime.ToString("mm/dd/") == ProposedTime.ToString(""))
+                if (x.AppTime.ToString("{0:MM/dd/yyyy h:mm tt}") ==
+                    ProposedApp.AppTime.ToString("{0:MM/dd/yyyy h:mm tt}"))
                 {
-                    return false;
+                    if (x.ProviderId == ProposedApp.ProviderId)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
-                //method to check availibility that loops thru list of app an checks time
         }
 
 

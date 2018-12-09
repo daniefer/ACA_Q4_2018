@@ -53,7 +53,17 @@ namespace SpaAppointment.Services
 
         public ServiceProvider GetProvider(int id)
         {
-            return _spaContext.ServiceProviders.First(SelectProviderById(id));
+            return _spaContext.ServiceProviders.Single(SelectProviderById(id));
+        }
+
+        public bool ThisProviderExists(int id)
+        {
+            foreach(ServiceProvider serv in _spaContext.ServiceProviders)
+            {
+                if (serv.Id == id)
+                return true;
+            }
+            return false;
         }
 
         //Selector Functions

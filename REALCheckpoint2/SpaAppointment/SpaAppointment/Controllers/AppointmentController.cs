@@ -14,10 +14,14 @@ namespace SpaAppointment.Controllers
     public class AppointmentController : Controller
     {
         private readonly AppointmentRepository _repo;
+        private readonly CustomerRepository _custRepo;
+        private readonly ServiceProviderRepository _servRepo;
         
-        public AppointmentController(AppointmentRepository repo)
+        public AppointmentController(AppointmentRepository repo, CustomerRepository custRepo, ServiceProviderRepository servRepo)
         {
             _repo = repo;
+            _custRepo = custRepo;
+            _servRepo = servRepo;
         }
 
         // GET: Appointment
@@ -41,20 +45,40 @@ namespace SpaAppointment.Controllers
         // POST: Appointment/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Appointment appointments)
+        public ActionResult Create(Appointment appointment)
         {
-            if (_repo.isAppointmentAvailable(appointments.AppTime))
+            if (_repo.isAppointmentAvailable(appointment))
             {
-                _repo.Add(appointments);
-                return RedirectToAction(nameof(Index));
+                if (_custRepo.ThisCustomerExists(appointment.CustomerId))
+                {
+                    if (_servRepo.ThisProviderExists(appointment.ProviderId))
+                    {
+                        _repo.Add(appointment);
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("ProviderId",
+                            "There is no Service Provider that exists with the selected ID..."+
+                            "I'm begging you, think very carefully and give this just one more shot, Big Guy");
+                        return View();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("CustomerId",
+                        "There is no customer that exists with that ID... Please try.. maybe... one more time?");
+                    return View();
+                }
             }
             else
             {
-                ModelState.AddModelError("AppTime", "Appointment is not available.");
+                ModelState.AddModelError("AppTime",
+                    "The selected Service Provider is not available for an appointment at this time. Please try again.");
                 return View();
             }
         }
-
+        
         // GET: Appointment/Edit/5
         public ActionResult Edit(int id)
         {

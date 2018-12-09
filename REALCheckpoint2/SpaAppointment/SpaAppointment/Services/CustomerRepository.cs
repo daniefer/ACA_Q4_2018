@@ -37,11 +37,22 @@ namespace SpaAppointment.Services
         {
             var index = _spaContext.Customers.First(SelectCustomerById(id));
             _spaContext.Customers.Remove(index);
+            _spaContext.SaveChanges();
         }
 
         public Customer GetCustomer(int id)
         {
-            return _spaContext.Customers.First(SelectCustomerById(id));
+            return _spaContext.Customers.FirstOrDefault(SelectCustomerById(id));
+        }
+
+        public bool ThisCustomerExists(int id)
+        {
+            foreach(Customer cust in _spaContext.Customers)
+            {
+                if(cust.Id == id)
+                return true;
+            }
+            return false;
         }
 
         //Selector Functions
