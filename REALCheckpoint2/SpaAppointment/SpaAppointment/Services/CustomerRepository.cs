@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpaAppointment.Services
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly SpaContext _spaContext;
         public IQueryable<Customer> Customers => _spaContext.Customers.AsQueryable();

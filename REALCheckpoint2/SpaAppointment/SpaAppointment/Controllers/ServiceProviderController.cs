@@ -11,9 +11,9 @@ namespace SpaAppointment.Controllers
 {
     public class ServiceProviderController : Controller
     {
-        private readonly ServiceProviderRepository repo;
+        private readonly IServiceProviderRepository repo;
 
-        public ServiceProviderController(ServiceProviderRepository _repo)
+        public ServiceProviderController(IServiceProviderRepository _repo)
         {
             repo = _repo;
         }

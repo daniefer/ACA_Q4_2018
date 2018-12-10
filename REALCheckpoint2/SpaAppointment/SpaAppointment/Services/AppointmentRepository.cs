@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpaAppointment.Services
 {
-    public class AppointmentRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly SpaContext _spaContext;
         private readonly IReadOnlySpaContext _readOnlySpaContext;

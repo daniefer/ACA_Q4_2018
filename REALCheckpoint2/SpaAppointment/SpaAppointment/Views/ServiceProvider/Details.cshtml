@@ -36,17 +36,20 @@
 <table>
     @foreach (var item in appointments)
     {
-        <tr>
-            <td>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.AppTime)
+            </dt>
+            <dd>
                 @Html.DisplayFor(modelItem => item.AppTime)
-            </td>
-            <td>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(modelItem => CustRepo.GetCustomer(item.CustomerId).Name)
+            </dt>
+            <dd>
                 @Html.DisplayFor(modelItem => CustRepo.GetCustomer(item.CustomerId).Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProviderId)
-            </td>
-        </tr>
+            </dd>
+        </dl>
     }
 </table>
 

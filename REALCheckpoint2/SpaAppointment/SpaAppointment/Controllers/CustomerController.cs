@@ -11,8 +11,8 @@ namespace SpaAppointment.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly CustomerRepository _repo;
-        public CustomerController(CustomerRepository repo)
+        private readonly ICustomerRepository _repo;
+        public CustomerController(ICustomerRepository repo)
         {
             _repo = repo;
         }

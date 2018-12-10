@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
 using SpaAppointment.Data;
 using SpaAppointment.Models;
 using SpaAppointment.Services;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
+
 namespace SpaAppointment.Tests
 {
     public class CustomerRepositoryTest
@@ -16,7 +18,7 @@ namespace SpaAppointment.Tests
         public void CanCustomerRepositoryGetCustomer()
         {
             //arrange
-            var mockSpaContext = new Mock<SpaContext>();
+            var mockSpaContext = new Mock<SpaContext>(new DbContextOptionsBuilder<SpaContext>().Options);
             CustomerRepository repo = new CustomerRepository(mockSpaContext.Object);
             var testCustomer = new Customer()
             {

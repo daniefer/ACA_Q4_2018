@@ -16,7 +16,7 @@ namespace SpaAppointment.Tests
         public void CanServiceProviderControllerViewDetails()
         {
             //arrange
-            var mockServRepo = new Mock<ServiceProviderRepository>();
+            var mockServRepo = new Mock<IServiceProviderRepository>();
             var controller = new ServiceProviderController(mockServRepo.Object);
             var testProvider = new ServiceProvider();
 

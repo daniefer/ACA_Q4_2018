@@ -13,11 +13,12 @@ namespace SpaAppointment.Controllers
 {
     public class AppointmentController : Controller
     {
-        private readonly AppointmentRepository _repo;
-        private readonly CustomerRepository _custRepo;
-        private readonly ServiceProviderRepository _servRepo;
+        private readonly IAppointmentRepository _repo;
+        private readonly ICustomerRepository _custRepo;
+        private readonly IServiceProviderRepository _servRepo;
         
-        public AppointmentController(AppointmentRepository repo, CustomerRepository custRepo, ServiceProviderRepository servRepo)
+        public AppointmentController(IAppointmentRepository repo,
+            ICustomerRepository custRepo, IServiceProviderRepository servRepo)
         {
             _repo = repo;
             _custRepo = custRepo;
@@ -58,8 +59,8 @@ namespace SpaAppointment.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("ProviderId",
-                            "There is no Service Provider that exists with the selected ID..."+
+                        ModelState.AddModelError("",
+                            "There is no Service ProProviderIdvider that exists with the selected ID..."+
                             "I'm begging you, think very carefully and give this just one more shot, Big Guy");
                         return View();
                     }

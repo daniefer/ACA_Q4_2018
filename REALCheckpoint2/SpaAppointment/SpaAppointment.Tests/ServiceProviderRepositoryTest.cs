@@ -16,7 +16,7 @@ namespace SpaAppointment.Tests
         public void CanServiceProviderRepositoryDeleteProvider()
         {
             //arrange
-            var mockSpaContext = new Mock<SpaContext>();
+            var mockSpaContext = new Mock<SpaContext>(null);
             var mockReadOnlySpaContext = new Mock<IReadOnlySpaContext>();
             ServiceProviderRepository repo = new ServiceProviderRepository(
                 mockSpaContext.Object, mockReadOnlySpaContext.Object);
